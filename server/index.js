@@ -25,7 +25,7 @@ async function start () {
     await nuxt.ready()
   }
 
-  app.get('/healthchek', (req, res) => {
+  app.get('/healthcheck', (req, res) => {
     res.send('OK');
   })
   // Give nuxt middleware to express
