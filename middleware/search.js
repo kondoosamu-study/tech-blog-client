@@ -1,16 +1,17 @@
 export default function ({ store, route, redirect }) {
-    // if (process.server) {
-        if (route.query.w === undefined || !route.query.w.length) {
-            redirect('/');
-        }
-        // 全角スペースを半角スペースにする
-        let searchWordFromUrl = route.query.w.replace(/　/g, ' ');
-        if (searchWordFromUrl.match(/\S/g) === null) {
-            redirect('/');
-        }
+    if (route.query.w === undefined || !route.query.w.length) {
+        redirect('/');
+    }
 
-        // スペース以外の文字列が存在すればそのまま渡す
-        // スペース以外の文字列がなければredirectで/にする
+    // 検索ワードが半角スペースのみの場合はトップ画面にリダイレクトする
+    let searchWordFromUrl = route.query.w.replace(/　/g, ' ');
+    if (searchWordFromUrl.match(/\S/g) === null) {
+        redirect('/');
+    }
+
+    // 検索ワードをstoreに設定する
+    // ここでsearch以外を入力してもNuxt Linkで遷移した時に反映されないので不要
+    // if (route.path === '/search') {
         let regex1 = /(&){1}/gi;
         let regex2 = /("){1}/gi;
         let regex3 = /<[^\/]{1}.*?>/gi;
@@ -24,7 +25,10 @@ export default function ({ store, route, redirect }) {
             .replace(regex2, '&quot;')
             .replace(regex3, '<strong>')
             .replace(regex4, '</strong>')
-            .replace(/ +/g, " ");
+            .replace(/ +/g, " ")
+            .trim();
 
-        store.commit('setSearchWord', searchWord)
+        store.commit('setSearchWord', searchWord);
+        // store.dispatch('getArticlesBySearchWord', { searchWord: searchWord });
+    // }
 }

@@ -1,22 +1,37 @@
 <template>
-  <b-nav-form @submit="onSubmit" class="h-100">
-    <b-form-input v-model="formSearchWord" required class="my-sm-0 w-75" size="lg" placeholder="キーワードを入力して下さい"></b-form-input>
-    <b-button class="my-sm-0 w-25" size="lg" type="submit">
-      <font-awesome-icon :icon="['fas', 'search']" />
-    </b-button>
-  </b-nav-form>
+  <b-card bg-variant="light" header-bg-variant="dark" :header="`カテゴリ: ${searchCategoryName}`" header-text-variant="white" class="text-left mb-4">
+    <b-card-text>
+      検索結果: {{numberOfHitCategorizedArticles}}件
+    </b-card-text>
+  </b-card>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
-    
-};
+  watch: {
+    '$route'(to, from) {
+      this.countNumberOfHitCategoriesArticles();
+    }
+  },
+  computed: {
+    ...mapGetters({ searchCategoryName: "getSearchCategoryName" }),
+    ...mapGetters({ numberOfHitCategorizedArticles: "getNumberOfHitCategorizedArticles" }),
+  },
+  methods: {
+    ...mapActions(['countNumberOfHitCategoriesArticles']),
+  }
+}
 </script>
 
 <style>
 #__layout > div > nav {
   color: #fff;
   background-color: #000 !important;
+}
+
+#__layout > div > nav > li {
+  margin: 0 0 0 auto;
 }
 
 form > input {

@@ -4,7 +4,12 @@ export const state = () => ({
   articles: [],
   categoryRanking: [],
   articlesInSearchResults: [],
+  numberOfHitArticles: 0,
   urlSearchWord: [],
+  categorizedArticles: [],
+  numberOfHitCategorizedArticles: 0,
+  searchCategoryName: '',
+  article: [],
 })
 
 export const getters = {
@@ -17,8 +22,23 @@ export const getters = {
   getSearchResultArticles(state) {
     return state.articlesInSearchResults;
   },
+  getNumberOfHitArticles(state) {
+    return state.numberOfHitArticles;
+  },
   getSearchWord(state) {
     return state.urlSearchWord;
+  },
+  getCategorizedArticles(state) {
+    return state.categorizedArticles;
+  },
+  getNumberOfHitCategorizedArticles(state) {
+    return state.numberOfHitCategorizedArticles;
+  },
+  getSearchCategoryName(state) {
+    return state.searchCategoryName;
+  },
+  getArticle(state) {
+    return state.article;
   },
 }
 
@@ -32,8 +52,23 @@ export const mutations = {
   setArticlesInSearchResults(state, payload) {
     state.articlesInSearchResults = payload;
   },
+  setNumberOfHitArticles(state, payload) {
+    state.numberOfHitArticles = payload;
+  },
   setSearchWord(state, payload) {
     state.urlSearchWord = payload;
+  },
+  setCategorizedArticles(state, payload) {
+    state.categorizedArticles = payload;
+  },
+  setNumberOfHitCategorizedArticles(state, payload) {
+    state.numberOfHitCategorizedArticles = payload;
+  },
+  setSearchCategoryName(state, payload) {
+    state.searchCategoryName = payload;
+  },
+  setArticle(state, payload) {
+    state.article = payload;
   },
 }
 
@@ -73,11 +108,13 @@ export const actions = {
       });
     commit('setAllArticles', articles);
   },
+
   createCategoryRanking({ commit, state }) {
     const articles = state.articles;
     let categoriesCount = [];
     let categoryNumber = [];
     let isFirst = true;
+    let categoryRanking = [];
     for (let article of articles) {
       if (isFirst) {
         categoriesCount.push({ category: article.category, count: 1 })
@@ -91,8 +128,11 @@ export const actions = {
         categoriesCount[categoryNumber].count++;
       }
     }
-    commit('setCategoryRanking', categoriesCount);
+    // 出力したいcategory数を下記のsliceで設定する
+    categoryRanking = categoriesCount.slice(0,10);
+    commit('setCategoryRanking', categoryRanking);
   },
+
   getArticlesBySearchWord({ commit, state }, { searchWord }) {
     // フローチャート
     // 1. 全記事取得
@@ -103,25 +143,47 @@ export const actions = {
     // ・title
     // 3. 検索ワード毎に2の条件に当てはまる記事をカウントする
     // 4. カウントが多い順、次に日付の順番で記事を並び替える
-    console.log('searchWord in store', searchWord);
-    
 
     // [変数定義]
-    const articles = state.articles;
-    // let searchWords = searchWord.split(/\s/);
-    // URLで直接入力された時を考慮してHTML文字列の変換を行う
-    // 下記は例
-    // <script>alert('攻撃');</script>
+    const allArticles = state.articles;
+    // 検索対象の要素を小文字に変換する為に使用する変数（article.tags.indexOfの時にtagsが配列でarticle.tags.toLowerCase.indexOfができない為）
+    let articles = [];
+    let tags = [];
+    for (let row of state.articles) {
+      tags = [];
+      if (row.tags.length === 1) {
+        tags.push(row.tags[0].toLowerCase());
+      } else {
+        for (let tag of tags) {
+          tags.push(tag.toLowerCase());
+        }
+      }
+
+      articles.push({
+        category: row.category.toLowerCase(),
+        contents: row.contents.toLowerCase(),
+        createdAt: row.createdAt,
+        deletedAt: row.deletedAt,
+        id: row.id,
+        tags: tags,
+        thumbnailFullPath: row.thumbnailFullPath,
+        thumbnailName: row.thumbnailName,
+        thumbnailUrl: row.thumbnailUrl,
+        title: row.title.toLowerCase(),
+        updatedAt: row.updatedAt
+      })
+    }
+
     let regex1 = /(&){1}/gi;
-    let chenge1 = searchWord.replace(regex1, '&amp;')
+    let change1 = searchWord.replace(regex1, '&amp;')
     let regex2 = /("){1}/gi;
-    let chenge2 = chenge1.replace(regex2, '&quot;')
+    let change2 = change1.replace(regex2, '&quot;')
     let regex3 = /<[^\/]{1}.*?>/gi;
-    let chenge3 = chenge2.replace(regex3, '<strong>')
+    let change3 = change2.replace(regex3, '<strong>')
     let regex4 = /<(\/){1}.*?>/gi;
-    let chenge4 = chenge3.replace(regex4, '</strong>')
-    let searchWords = chenge4.split(/\s/);
-    console.log(searchWords);
+    let change4 = change3.replace(regex4, '</strong>')
+    let change5 = change4.toLowerCase();
+    let searchWords = change5.split(/\s/);
     
     let searchResultsOfCategoies;
     // 検索対象記事のid, updatedAt, count情報を保持
@@ -144,6 +206,8 @@ export const actions = {
       searchResultsOfCategoies.contents = articles.filter(function (article) {
         if (article.contents.indexOf(searchWords[numberOfSearchWords]) >= 0) return true;
       })
+      // ※ 下記のtagsは配列の為、拾えきれないことがある。
+      // よって、回収の余地あり
       searchResultsOfCategoies.tags = articles.filter(function (article) {
         if (article.tags.indexOf(searchWords[numberOfSearchWords]) >= 0) return true;
       })
@@ -203,8 +267,9 @@ export const actions = {
       }
     })
 
+    // 検索結果の記事を articlesInSearchResults 変数に格納する
     for (let row of matchArticles) {
-      articlesInSearchResults.push(articles.filter((article) => {
+      articlesInSearchResults.push(allArticles.filter((article) => {
         if (article.id === row.id) return article;
       }));
     }
@@ -212,10 +277,34 @@ export const actions = {
     articlesInSearchResults = articlesInSearchResults.flat();
 
     commit('setArticlesInSearchResults', articlesInSearchResults);
+    commit('setNumberOfHitArticles', articlesInSearchResults.length);
   },
+
+  countNumberOfHitArticles({ commit, state }) {
+    let numberOfHitArticles = state.articlesInSearchResults.length;
+    commit('setNumberOfHitArticles', numberOfHitArticles);
+  },
+
   setSearchWordFrom({ commit }, { urlSearchWord }) {
-    console.log("urlSearchWord", urlSearchWord);
-    
     commit('setSearchWord', urlSearchWord);
-  }
+  },
+
+  // カテゴリを元に記事を取得するメソッドを定義する
+  getArticlesByCategory({ commit, state }, { category }) {    
+    const allArticles = state.articles;
+    let categoryArticles = [];
+
+    categoryArticles = allArticles.filter(function (article) {
+      if (article.category.indexOf(category) >= 0) return true;
+    })
+    
+    commit('setCategorizedArticles', categoryArticles);
+    commit('setNumberOfHitCategorizedArticles', categoryArticles.length);
+    commit('setSearchCategoryName', category);
+  },
+
+  countNumberOfHitCategoriesArticles({ commit, state }) {
+    let numberOfHitArticles = state.categorizedArticles.length;
+    commit('setNumberOfHitCategorizedArticles', numberOfHitArticles);
+  },
 }

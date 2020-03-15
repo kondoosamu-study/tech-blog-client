@@ -2,13 +2,7 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand class to="/">tech blog</b-navbar-brand>
-      <!-- 下記のform部分のみをcomponentにして組み込んだ方が良い -->
-      <b-nav-form @submit="onSubmit" class="h-100">
-        <b-form-input v-model="formSearchWord" required class="my-sm-0 w-75" size="lg" placeholder="キーワードを入力して下さい"></b-form-input>
-        <b-button class="my-sm-0 w-25" size="lg" type="submit">
-          <font-awesome-icon :icon="['fas', 'search']" />
-        </b-button>
-      </b-nav-form>
+      <searchForm/>
     </b-navbar>
     <nuxt />
     <footer>
@@ -23,56 +17,11 @@
 <script>
 // どうにもうまく動かない為、componentsに変更した方が良さそうかも
 // /search/index.vue以外（/(index.vue)トップページとarticle/_id.vue）には検索ワードを表示させない
-import { mapGetters, mapActions } from "vuex";
+import searchForm from '@/components/searchForm';
 export default {
-  data() {
-    return {
-      formSearchWord: "",
-    }
+  components: {
+    searchForm
   },
-  async fetch({ store, route }) {
-		await store.dispatch('setSearchWordFrom', { urlSearchWord: route.query.w });
-  },
-  computed: {
-    ...mapGetters({ urlSearchWord: "getSearchWord" }),
-  },
-  async mounted() {
-    if (this.urlSearchWord.length) {
-      await this.mountSearchWordsOnFormParameter();
-    }
-  },
-  methods: {
-    onSubmit(evt) {
-      evt.preventDefault();
-      // フローチャート
-      // ・検索文字形成とsearch/index.jsに遷移させる
-      // 1. formの値を取得する
-      // 2. formの値を空白（全角、半角）を削除する（escapeSpecialCharsメソッド）
-      // -> 先ず全角スペースを半角に変換する
-      // -> 半角スペース毎にsplitする
-      // 3. search/index.jsにURLパラメーターを持って遷移させる
-      let searchWordFromUrl = this.escapeSpecialChars(this.formSearchWord);
-      this.formSearchWord = searchWordFromUrl.replace(/　/g, ' ');
-      searchWordFromUrl = this.formSearchWord.replace(/ +/g, " ");
-      if (searchWordFromUrl.match(/\S/g) === null) {
-            this.formSearchWord ='';
-      } else {
-        this.$router.push({ path: 'search', query: { w: searchWordFromUrl } });
-      }
-    },
-    escapeSpecialChars(searchWord) {
-      return searchWord
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-        // .replace(/\\[ntsS]/g, "");
-    },
-    mountSearchWordsOnFormParameter() {
-      this.formSearchWord = this.urlSearchWord;
-    },
-  }
 }
 </script>
 
@@ -112,6 +61,11 @@ form > input {
 form > input::placeholder {
   font-size: 0.6em;
 }
+
+.right {
+    margin: 0 0 0 auto;
+}
+
 
 /* SP用のCSS */
 @media only screen and (max-device-width: 480px) {
