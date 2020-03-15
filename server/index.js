@@ -26,7 +26,7 @@ async function start () {
   }
 
   app.get('/healthcheck', (req, res) => {
-    res.send('OK');
+    res.send('OK!');
   })
   // Give nuxt middleware to express
   app.use(nuxt.render)
