@@ -1,4 +1,5 @@
 export default async function ({ store, route, redirect }) {
+    console.log('searchMidです。');
     if (route.query.w === undefined || !route.query.w.length) {
         redirect('/');
     }
@@ -32,6 +33,7 @@ export default async function ({ store, route, redirect }) {
         await store.dispatch('fetchAllArticles');
         
         if (store.state.articles === undefined || !store.state.articles) {
+            console.log('取得できませんでした。');
             redirect(route.fullPath);
         }
         // store.dispatch('getArticlesBySearchWord', { searchWord: searchWord });
