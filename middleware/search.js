@@ -1,4 +1,4 @@
-export default function ({ store, route, redirect }) {
+export default async function ({ store, route, redirect }) {
     if (route.query.w === undefined || !route.query.w.length) {
         redirect('/');
     }
@@ -29,6 +29,7 @@ export default function ({ store, route, redirect }) {
             .trim();
 
         store.commit('setSearchWord', searchWord);
-        // store.dispatch('getArticlesBySearchWord', { searchWord: searchWord });
+        await store.dispatch('fetchAllArticles');
+        store.dispatch('getArticlesBySearchWord', { searchWord: searchWord });
     // }
 }
