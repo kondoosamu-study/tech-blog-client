@@ -30,6 +30,12 @@ export default async function ({ store, route, redirect }) {
 
         store.commit('setSearchWord', searchWord);
         await store.dispatch('fetchAllArticles');
-        store.dispatch('getArticlesBySearchWord', { searchWord: searchWord });
+        
+        if (store.state.articles === undefined || !store.state.articles) {
+            redirect(route.fullPath);
+        }
+        // store.dispatch('getArticlesBySearchWord', { searchWord: searchWord });
+        // console.log(store.state.articlesInSearchResults);
+        
     // }
 }
