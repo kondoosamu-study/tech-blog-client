@@ -1,14 +1,14 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand class to="/">tech blog</b-navbar-brand>
+      <b-navbar-brand class to="/">ok-engineering.net</b-navbar-brand>
       <searchForm/>
     </b-navbar>
     <nuxt />
     <footer>
       <div class="light copyright-box text-center py-3" style="background-color: #000;">
         &copy; 2020 Copyright:
-        <nuxt-link to="/" style="color: white;">tech blog</nuxt-link>
+        <nuxt-link to="/" style="color: white;">ok-engineering.net</nuxt-link>
       </div>
     </footer>
   </div>

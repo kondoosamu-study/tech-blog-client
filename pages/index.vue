@@ -10,10 +10,10 @@
             <nuxt-link :to="`/article/${article.id}`" class="article-link">
               <b-card no-body class="overflow-hidden w-100">
                 <b-row no-gutters>
-                  <b-col md="4">
+                  <b-col md="2">
                     <b-card-img :src="article.thumbnailUrl" class="rounded-0 thumbnai-image"></b-card-img>
                   </b-col>
-                  <b-col md="8">
+                  <b-col md="10">
                     <b-card-body :title="article.title" class="text-left">
                       <b-card-text class="article-context">{{ article.contents.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').replace(/&/g, '').replace(/nbsp;/g, '') }}</b-card-text>
                     </b-card-body>
