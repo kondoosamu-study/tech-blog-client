@@ -81,12 +81,6 @@ div > nav > li > form > button {
   border-bottom-left-radius: 0px !important;
 }
 
-/* SP用のCSS */
-@media only screen and (max-device-width: 480px) {
-   /* #__layout > div > div > div > div > div.col-md-4 > div { */
-  
-}
-
 @media only screen and (min-width:480px) and (max-width:767px) {
   /* カテゴリ */
   #__layout > div > div > div > div {
@@ -95,7 +89,7 @@ div > nav > li > form > button {
     width: 100%;
   }
   #__layout > div > div > div > div > div.col-md-4 > div {
-    margin-left: 1.5rem !important;
+    margin-top: 1.5rem !important;
   }
 }
 

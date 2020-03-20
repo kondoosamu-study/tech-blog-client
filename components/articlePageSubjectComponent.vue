@@ -2,7 +2,7 @@
   <b-card img-alt="Thumbnai image" img-left class="mb-3">
     <b-row no-gutters>
     <b-col md="4">
-      <b-card-img :src="article.thumbnailUrl" alt="Image" bottom></b-card-img>
+      <b-card-img :src="article.thumbnailUrl" alt="article-thumbnail" bottom></b-card-img>
     </b-col>
     <b-col md="8">
       <b-card-body :title="article.title" class="text-left py-2">

@@ -10,10 +10,10 @@
             <nuxt-link :to="`/article/${article.id}`" class="article-link">
               <b-card no-body class="overflow-hidden w-100">
                 <b-row no-gutters>
-                  <b-col md="4">
-                    <b-card-img :src="article.thumbnailUrl" class="rounded-0 thumbnai-image"></b-card-img>
+                  <b-col md="2">
+                    <b-card-img :src="article.thumbnailUrl" class="rounded-0 thumbnail-image" alt="article-thumbnail"></b-card-img>
                   </b-col>
-                  <b-col md="8">
+                  <b-col md="10">
                     <b-card-body :title="article.title" class="text-left">
                       <b-card-text class="article-context">{{ article.contents.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').replace(/&/g, '').replace(/nbsp;/g, '') }}</b-card-text>
                     </b-card-body>
@@ -69,9 +69,9 @@ body {
   position: relative;
 }
 
-.thumbnai-image {
+.thumbnail-image {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
 }
 
 .article-context {
@@ -118,4 +118,13 @@ body {
     width: 100%;
   }
 }
+
+/* @media only screen and (min-width:480px) and (max-width:1024px) { */
+  /* カテゴリ */
+  /* #__layout > div > div > div > div {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+} */
+
 </style>

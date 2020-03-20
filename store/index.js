@@ -274,10 +274,18 @@ export const actions = {
       }));
     }
     // 配列で返ってくる為、ネストを削除する
-    articlesInSearchResults = articlesInSearchResults.flat();
+    // articlesInSearchResults = articlesInSearchResults.flat();
 
-    commit('setArticlesInSearchResults', articlesInSearchResults);
-    commit('setNumberOfHitArticles', articlesInSearchResults.length);
+    let flatResults = [];
+    for (let i = 0; i < articlesInSearchResults.length; i++) {
+      flatResults.push(articlesInSearchResults[i][0]);
+    }
+    
+
+    // commit('setArticlesInSearchResults', articlesInSearchResults);
+    // commit('setNumberOfHitArticles', articlesInSearchResults.length);
+    commit('setArticlesInSearchResults', flatResults);
+    commit('setNumberOfHitArticles', flatResults.length);
   },
 
   countNumberOfHitArticles({ commit, state }) {
