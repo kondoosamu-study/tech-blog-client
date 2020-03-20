@@ -274,6 +274,7 @@ export const actions = {
       }));
     }
     // 配列で返ってくる為、ネストを削除する
+    console.log(" articlesInserarhReasurlrl ~================", articlesInSearchResults);
     articlesInSearchResults = articlesInSearchResults.flat();
 
     commit('setArticlesInSearchResults', articlesInSearchResults);
