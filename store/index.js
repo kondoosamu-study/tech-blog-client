@@ -274,20 +274,12 @@ export const actions = {
       }));
     }
     // 配列で返ってくる為、ネストを削除する
-    console.log(" articlesInserarhReasurlrl ~================", articlesInSearchResults);
     // articlesInSearchResults = articlesInSearchResults.flat();
-
-    // var arr = [[{ name: "php" }], [{ name: "java" }]];
-
-    // var flatArr = [];
 
     let flatResults = [];
     for (let i = 0; i < articlesInSearchResults.length; i++) {
-      console.log('iについて~~~~~~~~~~', articlesInSearchResults[i][0]);
-      
       flatResults.push(articlesInSearchResults[i][0]);
     }
-    console.log('flatResults ~~~~~~~~~~~~', flatResults);
     
 
     // commit('setArticlesInSearchResults', articlesInSearchResults);
