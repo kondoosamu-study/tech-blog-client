@@ -104,7 +104,9 @@ body {
 
 .thumbnail-image {
   width: 100%;
-  /* height: 100%; */
+  object-fit: cover;
+  object-position: 0 0;
+  height: auto;
 }
 
 .article-context {
