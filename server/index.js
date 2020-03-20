@@ -1,5 +1,6 @@
 const express = require('express')
 const consola = require('consola')
+const helmet = require('helmet')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
 
@@ -24,6 +25,8 @@ async function start () {
   } else {
     await nuxt.ready()
   }
+
+  app.use(helmet())
 
   app.get('/healthcheck', (req, res) => {
     res.send('OK!');
