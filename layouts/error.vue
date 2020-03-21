@@ -30,12 +30,27 @@
  
 <script>
 export default {
+  // layout: 'default',
   props: {
     error: {
       type: Object,
       default: null
     }
   },
-  layout: 'blog'
+  data() {
+    return {
+      timeOut: 5
+    }
+  },
+  created: function() {
+    setInterval(() => { this.timeOut-- }, 1000)
+  },
+  watch: {
+    timeOut: function(v) {
+    if (v <= 0) {
+        document.location = "https://ok-engineering.net/"
+      }
+    }
+  },
 }
 </script>
