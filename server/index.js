@@ -3,6 +3,7 @@ const consola = require('consola')
 const helmet = require('helmet')
 const { Nuxt, Builder } = require('nuxt')
 const app = express()
+const routes = require('./api');
 
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -31,6 +32,9 @@ async function start () {
   app.get('/healthcheck', (req, res) => {
     res.send('OK!');
   })
+  
+  app.use('/api', routes);
+
   // Give nuxt middleware to express
   app.use(nuxt.render)
 

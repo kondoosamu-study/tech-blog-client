@@ -128,8 +128,13 @@ export const actions = {
         categoriesCount[categoryNumber].count++;
       }
     }
+    
     // 出力したいcategory数を下記のsliceで設定する
-    categoryRanking = categoriesCount.slice(0,10);
+    categoryRanking = categoriesCount.slice(0,50);
+    categoryRanking.sort((o, next_o) => {
+      return o.count > next_o.count ? -1 : 1
+    })
+    
     commit('setCategoryRanking', categoryRanking);
   },
 
