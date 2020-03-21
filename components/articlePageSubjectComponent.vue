@@ -2,7 +2,7 @@
   <b-card img-alt="Thumbnai image" img-left class="mb-3">
     <b-row no-gutters>
     <b-col md="4">
-      <b-card-img :src="article.thumbnailUrl" alt="article-thumbnail" bottom></b-card-img>
+      <b-card-img :src="article.thumbnailUrl" alt="article-thumbnail" bottom class="article-subject-image"></b-card-img>
     </b-col>
     <b-col md="8">
       <b-card-body :title="article.title" class="text-left py-2">
@@ -75,6 +75,10 @@ form > input::placeholder {
   div > nav > li > form{
     margin: 0 auto !important;
     width: 100% !important;
+  }
+  .article-subject-image {
+    width: 100% !important;
+    height: auto !important;
   }
 }
 

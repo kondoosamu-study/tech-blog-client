@@ -153,6 +153,13 @@ body {
     margin-left: 0;
     width: 100%;
   }
+  .thumbnail-image {
+    width: 100%;
+    object-fit: cover;
+    object-position: 0 0;
+    height: auto;
+    padding: 2%;
+  }
 }
 
 @media only screen and (min-width:480px) and (max-width:1024px) {

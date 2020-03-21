@@ -40,7 +40,9 @@ export default {
   components: {
     categoryRanking
   },
-  async fetch({ store }) {
+  async fetch({ store, $axios }) {
+    const { data } = await $axios.get('/api/category/ranking');
+    console.log(" Response from API ===========", data);
     await store.dispatch("fetchAllArticles");
     await store.dispatch("createCategoryRanking");
   },
@@ -71,7 +73,9 @@ body {
 
 .thumbnail-image {
   width: 100%;
-  /* height: 100%; */
+  object-fit: cover;
+  object-position: 0 0;
+  height: auto;
 }
 
 .article-context {
@@ -116,6 +120,13 @@ body {
     margin-top: 8px;
     margin-left: 0;
     width: 100%;
+  }
+  .thumbnail-image {
+    width: 100%;
+    object-fit: cover;
+    object-position: 0 0;
+    height: auto;
+    padding: 2%;
   }
 }
 

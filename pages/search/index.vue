@@ -90,7 +90,9 @@ body {
 
 .thumbnail-image {
   width: 100%;
-  /* height: 100%; */
+  object-fit: cover;
+  object-position: 0 0;
+  height: auto;
 }
 
 .article-context {
@@ -132,6 +134,13 @@ body {
     margin-top: 8px;
     margin-left: 0;
     width: 100%;
+  }
+  .thumbnail-image {
+    width: 100%;
+    object-fit: cover;
+    object-position: 0 0;
+    height: auto;
+    padding: 2%;
   }
 }
 </style>
