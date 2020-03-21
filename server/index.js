@@ -33,7 +33,9 @@ async function start () {
     res.send('OK!');
   })
   
-  app.use('/api', routes);
+  // API用ディレクトリの設定
+  // 将来的にここでMySQLクエリを行うソースを作成する
+  // app.use('/api', routes);
 
   // Give nuxt middleware to express
   app.use(nuxt.render)
