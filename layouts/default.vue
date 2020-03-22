@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand class to="/">ok-engineering.net</b-navbar-brand>
+      <b-navbar-brand class @click="$router.push('/')">ok-engineering.net</b-navbar-brand>
       <searchForm/>
     </b-navbar>
     <nuxt />
