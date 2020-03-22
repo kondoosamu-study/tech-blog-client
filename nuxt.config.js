@@ -1,4 +1,3 @@
-
 module.exports = {
   mode: 'universal',
   /*
@@ -53,6 +52,7 @@ module.exports = {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    baseURL: process.env.NODE_ENV == 'production' ? 'https://ok-engineering.net' : 'http://localhost:3000',
   },
   fontawesome: {
     imports: [
@@ -82,8 +82,8 @@ module.exports = {
   /*
   ** Env configuration
   */
-  env: {
-    BASE_URL: process.env.BASE_URL || 'https://ok-engineering.net',
-    API_URL: process.env.API_URL || 'https://ok-engineering.net',
-  }
+  // env: {
+  //   BASE_URL: process.env.BASE_URL || 'https://ok-engineering.net',
+  //   API_URL: process.env.API_URL || 'https://ok-engineering.net',
+  // }
 }
