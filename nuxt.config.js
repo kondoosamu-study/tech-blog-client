@@ -72,8 +72,18 @@ module.exports = {
     extend (config, ctx) {
     }
   },
+  /*
+  ** Server access
+  */
   server: {
     port: 3000,
     host: "0.0.0.0",
+  },
+  /*
+  ** Env configuration
+  */
+  env: {
+    BASE_URL: process.env.BASE_URL || 'http://localhost:3000',
+    API_URL: process.env.API_URL || 'http://localhost:3000',
   }
 }
