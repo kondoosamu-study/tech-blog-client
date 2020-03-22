@@ -83,7 +83,7 @@ module.exports = {
   ** Env configuration
   */
   env: {
-    BASE_URL: process.env.BASE_URL || 'http://localhost:3000',
-    API_URL: process.env.API_URL || 'http://localhost:3000',
+    BASE_URL: process.env.BASE_URL || 'https://ok-engineering.net',
+    API_URL: process.env.API_URL || 'https://ok-engineering.net',
   }
 }
