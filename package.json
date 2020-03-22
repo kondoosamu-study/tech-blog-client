@@ -1,8 +1,8 @@
 {
-  "name": "tech_blog",
+  "name": "ok-engineering.net",
   "version": "1.0.0",
-  "description": "My wondrous Nuxt.js project",
-  "author": "osamukondo",
+  "description": "Tech blog with Nuxt.js",
+  "author": "ok",
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
