@@ -80,7 +80,7 @@ module.exports = {
     host: "0.0.0.0",
   },
   /*
-  ** Base url
+  ** Env configuration
   */
   env: {
     BASE_URL: process.env.BASE_URL || 'http://localhost:3000',
