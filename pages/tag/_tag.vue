@@ -37,7 +37,6 @@ import { mapGetters, mapActions } from "vuex";
 import tagPageSubjectComponent from "@/components/tagPageSubjectComponent";
 import categoryRanking from "@/components/categoryRanking";
 export default {
-    middleware: "search",
   components: {
     tagPageSubjectComponent,
     categoryRanking
@@ -48,7 +47,6 @@ export default {
   },
   watch: {
     '$route'(to, from) {
-      this.fetchAllArticles();
       this.createCategoryRanking();
       this.getArticlesByTag({ tag: to.params.tag });
     }
@@ -61,10 +59,7 @@ export default {
     await this.checkArticlesExists();
   },
   methods: {
-    ...mapActions([
-      "createCategoryRanking",
-      "getArticlesByTag",
-    ]),
+    ...mapActions(["createCategoryRanking", "getArticlesByTag",]),
     checkArticlesExists() {
       if (!this.articlesInSearchResults.length) {
         this.$router.push('/');

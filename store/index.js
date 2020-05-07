@@ -317,7 +317,6 @@ export const actions = {
     let searchWords = change5.split(/\s/);
     
     let { data } = await axios.post('http://0.0.0.0:3000/api/search', {searchWords});
-    console.log('getArticlesBySearchWord2 === ', data);
     commit('setArticlesInSearchResults', data);
     commit('setNumberOfHitArticles', data.length);
   },

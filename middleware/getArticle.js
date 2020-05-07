@@ -4,7 +4,6 @@ export default async function ({ store, route, redirect }) {
 	}
 
 	await store.dispatch("fetchTargetArticle", { id: route.params.id });
-	console.log('middleware about getArticle.js === ', store.state.article);
 	
 	if (!store.state.article) {
 		await store.dispatch("fetchTargetArticle", { id: route.params.id });
