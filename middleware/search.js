@@ -29,6 +29,6 @@ export default function ({ store, route, redirect }) {
             .trim();
 
         store.commit('setSearchWord', searchWord);
-        // store.dispatch('getArticlesBySearchWord', { searchWord: searchWord });
+        store.dispatch('getArticlesBySearchWord', { searchWord: searchWord });
     // }
 }

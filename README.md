@@ -19,4 +19,8 @@ $ npm run start
 $ npm run generate
 ```
 
+## npm and Node.js version
+npm version is 6.7.0
+Node.js version is 11.15.0
+
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

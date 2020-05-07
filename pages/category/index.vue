@@ -51,7 +51,7 @@ export default {
     await store.dispatch("fetchAllArticles");
     await store.dispatch("createCategoryRanking");
     // 【要変更】
-    // /searchのみを叩かれた時にroute.query.wの値が存在しない事からエラーが画面が出力されてしまうのでその時の対応をする
+    // /searchのみを叩かれた時にroute.query.wの値が存在しない事からエラー画面が出力されてしまうのでその時の対応をする
     await store.dispatch("getArticlesByCategory", { category: route.query.name });
   },
   watch: {
@@ -73,7 +73,7 @@ export default {
     ...mapActions([
       "fetchAllArticles",
       "createCategoryRanking",
-      "getArticlesByCategory"
+      "getArticlesByCategory",
     ]),
     checkArticlesExists() {
       if (!this.articlesInSearchResults.length) {

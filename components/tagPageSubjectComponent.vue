@@ -1,21 +1,8 @@
 <template>
-  <b-card img-alt="Thumbnai image" img-left class="mb-3">
-    <b-row no-gutters>
-    <b-col md="4">
-      <b-card-img :src="article.thumbnailUrl" alt="article-thumbnail" bottom class="article-subject-image"></b-card-img>
-    </b-col>
-    <b-col md="8">
-      <b-card-body :title="article.title" class="text-left py-2">
-        <b-card-text class="article-context">
-          <p><nuxt-link :to="`/category?name=${article.category}`" class="category-link">カテゴリ: {{ article.category }}</nuxt-link></p>
-          <p>タグ: <span v-for="(tag, index) in article.tags" :key="index" class="mr-2">
-            <nuxt-link :to="`/tag/${tag}`" class="category-link">{{ tag }}</nuxt-link>
-            </span></p>
-          <p>{{ article.updatedAt }}</p>
-        </b-card-text>
-      </b-card-body>
-    </b-col>
-    </b-row>
+  <b-card bg-variant="light" header-bg-variant="dark" :header="`タグ: ${searchTagName}`" header-text-variant="white" class="text-left mb-4">
+    <b-card-text>
+      検索結果: {{numberOfHitTagsArticles}}件
+    </b-card-text>
   </b-card>
 </template>
 
@@ -28,7 +15,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ article: "getArticle" }),
+    ...mapGetters({ searchTagName: "getSearchTagName" }),
+    ...mapGetters({ numberOfHitTagsArticles: "getNumberOfHitTagsArticles" }),
   },
   methods: {
     ...mapActions(['countNumberOfHitCategoriesArticles']),
@@ -70,10 +58,6 @@ form > input::placeholder {
   div > nav > li > form{
     margin: 0 auto !important;
     width: 100% !important;
-  }
-  .article-subject-image {
-    width: 100% !important;
-    height: auto !important;
   }
 }
 

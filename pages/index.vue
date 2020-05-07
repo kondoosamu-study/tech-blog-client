@@ -41,8 +41,6 @@ export default {
     categoryRanking
   },
   async fetch({ store, $axios }) {
-    const { data } = await $axios.get('/api/category/ranking');
-    console.log(" Response from API ===========", data);
     await store.dispatch("fetchAllArticles");
     await store.dispatch("createCategoryRanking");
   },

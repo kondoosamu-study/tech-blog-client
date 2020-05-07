@@ -1,15 +1,11 @@
 <template>
-  <div class="container py-5 ">
+  <div class="container py-5">
     <b-container fluid="sm md lg xl">
-      <searchPageSubjectComponent/>
-      <!-- start row and col -->  
+      <tagPageSubjectComponent/>
       <b-row no-gutters>
         <b-col md="8">
-          <!-- 記事が存在しなかった場合の表示を追加する -->
-        <!-- end row and col -->  
           <div v-for="(article, index) in articlesInSearchResults" :key="index">
             <nuxt-link :to="`/article/${article.id}`" class="article-link">
-              <!-- 【下記はカード毎にmt-2を追加する】 -->
               <b-card no-body class="overflow-hidden w-100">
                 <b-row no-gutters>
                   <b-col md="2">
@@ -17,9 +13,11 @@
                   </b-col>
                   <b-col md="10">
                     <b-card-body :title="article.title" class="text-left">
-                      <b-card-text class="article-context">{{ article.contents.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').replace(/&/g, '').replace(/nbsp;/g, '').replace(/\=/g, '').replace(/gt;/g, '') }}</b-card-text>
+                      <b-card-text class="article-context">
+                        {{ article.contents.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').replace(/&/g, '').replace(/nbsp;/g, '').replace(/\=/g, '').replace(/gt;/g, '') }}
+                      </b-card-text>
                     </b-card-body>
-                    <small class="text-muted float-sm-right mx-2"><nuxt-link :to="`/category?name=${article.category}`" class="category-link">カテゴリ: {{ article.category }} </nuxt-link>{{ article.updatedAt }}</small>
+                    <small class="text-muted float-sm-right mx-2">カテゴリ: {{ article.category }} {{ article.updatedAt }}</small>
                   </b-col>
                 </b-row>
               </b-card>
@@ -27,42 +25,51 @@
           </div>
         </b-col>
         <b-col md="4">
-					<categoryRanking/>
+          <categoryRanking />
         </b-col>
       </b-row>
     </b-container>
-    <!-- end card section -->
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import categoryRanking from '@/components/categoryRanking';
-import searchPageSubjectComponent from '@/components/searchPageSubjectComponent';
+import tagPageSubjectComponent from "@/components/tagPageSubjectComponent";
+import categoryRanking from "@/components/categoryRanking";
 export default {
-  middleware: "search",
+    middleware: "search",
   components: {
-    categoryRanking,
-    searchPageSubjectComponent,
+    tagPageSubjectComponent,
+    categoryRanking
   },
   async fetch({ store, route }) {
-    await store.dispatch('createCategoryRanking');
-    // 【要変更】
-    // /searchのみを叩かれた時にroute.query.wの値が存在しない事からエラーが画面が出力されてしまうのでその時の対応をする
-		await store.dispatch('getArticlesBySearchWord', { searchWord: route.query.w });
+    await store.dispatch("createCategoryRanking");
+    await store.dispatch("getArticlesByTag", { tag: route.params.tag });
   },
   watch: {
-    '$route'(to, from){
+    '$route'(to, from) {
+      this.fetchAllArticles();
       this.createCategoryRanking();
-      this.getArticlesBySearchWord({ searchWord: to.query.w });
+      this.getArticlesByTag({ tag: to.params.tag });
     }
   },
   computed: {
-		...mapGetters({ categoryRanking: "getCategoryRanking" }),
-		...mapGetters({ articlesInSearchResults: "getSearchResultArticles" }),
+    ...mapGetters({ categoryRanking: "getCategoryRanking" }),
+    ...mapGetters({ articlesInSearchResults: "getArticlesRelatedToTags" }),
+  },
+  async mounted() {
+    await this.checkArticlesExists();
   },
   methods: {
-    ...mapActions(['createCategoryRanking', 'getArticlesBySearchWord'])
+    ...mapActions([
+      "createCategoryRanking",
+      "getArticlesByTag",
+    ]),
+    checkArticlesExists() {
+      if (!this.articlesInSearchResults.length) {
+        this.$router.push('/');
+      }
+    },
   }
 };
 </script>
@@ -119,14 +126,18 @@ body {
 } */
 
 @media only screen and (max-device-width: 480px) {
+  /* コンテンツ */
   #__layout > div > div > div {
     margin-top: 8px;
   }
+
+  /* サムネイル画像 */
   div > div > div > img {
     height: 180px !important;
     width: 100%;
   }
 
+  /* カテゴリ */
   #__layout > div > div > div > div {
     margin-top: 8px;
     margin-left: 0;
@@ -138,6 +149,15 @@ body {
     object-position: 0 0;
     height: auto;
     padding: 2%;
+  }
+}
+
+@media only screen and (min-width:480px) and (max-width:1024px) {
+  /* カテゴリ */
+  #__layout > div > div > div > div {
+    margin-top: 8px;
+    margin-left: 0;
+    width: 100%;
   }
 }
 </style>

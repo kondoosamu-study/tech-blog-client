@@ -1,8 +1,6 @@
 <template>
-  <!-- カテゴリやタグを押下した際に、それを元にSearch/index.jpに遷移する機能を付ける。 -->
   <div class="container py-5">
     <b-container fluid="sm md lg xl">
-      <!-- start row and col -->
       <b-row no-gutters>
         <b-col md="8">
           <articlPageSubject/>
@@ -13,7 +11,6 @@
         </b-col>
       </b-row>
     </b-container>
-    <!-- end card section -->
   </div>
 </template>
 
@@ -28,12 +25,11 @@ export default {
     articlPageSubject,
     categoryRanking,
   },
-  async fetch({ store }) {
-    await store.dispatch("fetchAllArticles");
+  async fetch({ store, route }) {
+    await store.dispatch("fetchTargetArticle", { id: route.params.id });
     await store.dispatch("createCategoryRanking");
   },
   computed: {
-    // ...mapGetters({ categoryRanking: "getCategoryRanking" }),
     ...mapGetters({ article: "getArticle" }),
   },
   async mounted() {
