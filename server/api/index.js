@@ -114,15 +114,16 @@ router.get('/tag/:name', async (req, res) => {
 	})
 });
 
-router.post('/search', async (req, res) => {
+router.post('/search', async (req, res, next) => {
 	let searchWords = req.body.searchWords;
+	let getArticlesFromSearchWordQueryForExecuting = getArticlesFromSearchWordQuery;
 
 	for (let searchWord of searchWords) {
-		getArticlesFromSearchWordQuery = getArticlesFromSearchWordQuery.replace(/SEARCH_WORD/g, searchWord).replace('NEXT_SEARCH_CRITERIA', replacementStringForSearch);
+		getArticlesFromSearchWordQueryForExecuting = getArticlesFromSearchWordQueryForExecuting.replace(/SEARCH_WORD/g, searchWord).replace('NEXT_SEARCH_CRITERIA', replacementStringForSearch);
 	}
-	getArticlesFromSearchWordQuery = getArticlesFromSearchWordQuery.replace(replacementStringForSearch, ' ');
+	getArticlesFromSearchWordQueryForExecuting = getArticlesFromSearchWordQueryForExecuting.replace(replacementStringForSearch, ' ');
 
-	connection.query(getArticlesFromSearchWordQuery, (err, result) => {
+	connection.query(getArticlesFromSearchWordQueryForExecuting, (err, result) => {
 		if (err) {
 			console.log(" Error query =======", err);
 			return next(err);

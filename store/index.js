@@ -63,6 +63,7 @@ export const mutations = {
     state.categoryRanking = payload;
   },
   setArticlesInSearchResults(state, payload) {
+    state.articlesInSearchResults = [];
     state.articlesInSearchResults = payload;
   },
   setNumberOfHitArticles(state, payload) {

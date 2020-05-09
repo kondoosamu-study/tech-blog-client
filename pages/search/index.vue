@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapGetters, mapActions } from "vuex";
 import categoryRanking from '@/components/categoryRanking';
 import searchPageSubjectComponent from '@/components/searchPageSubjectComponent';
@@ -53,13 +54,12 @@ export default {
   },
   watch: {
     '$route'(to, from){
-      this.createCategoryRanking();
       this.getArticlesBySearchWord({ searchWord: to.query.w });
     }
   },
   computed: {
 		...mapGetters({ categoryRanking: "getCategoryRanking" }),
-		...mapGetters({ articlesInSearchResults: "getSearchResultArticles" }),
+    ...mapGetters({ articlesInSearchResults: "getSearchResultArticles" }),
   },
   methods: {
     ...mapActions(['createCategoryRanking', 'getArticlesBySearchWord'])
