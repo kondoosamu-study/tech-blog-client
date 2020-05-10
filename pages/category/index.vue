@@ -2,13 +2,9 @@
   <div class="container py-5">
     <b-container fluid="sm md lg xl">
       <categoryPageSubjectComponent/>
-      <!-- start row and col -->
       <b-row no-gutters>
         <b-col md="8">
-          <!-- 記事が存在しなかった場合の表示を追加する -->
-          <!-- end row and col -->
           <div v-for="(article, index) in articlesInSearchResults" :key="index">
-            <!-- 【下記はカード毎にmt-2を追加する】 -->
             <nuxt-link :to="`/article/${article.id}`" class="article-link">
               <b-card no-body class="overflow-hidden w-100">
                 <b-row no-gutters>
@@ -19,8 +15,6 @@
                     <b-card-body :title="article.title" class="text-left">
                       <b-card-text class="article-context">{{ article.contents.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,'').replace(/&/g, '').replace(/nbsp;/g, '').replace(/\=/g, '').replace(/gt;/g, '') }}</b-card-text>
                     </b-card-body>
-                    <!-- 下記のカテゴリのリンクは削除する
-                    同一カテゴリしか出力されない為 -->
                     <small class="text-muted float-sm-right mx-2">カテゴリ: {{ article.category }} {{ article.updatedAt }}</small>
                   </b-col>
                 </b-row>
@@ -33,7 +27,6 @@
         </b-col>
       </b-row>
     </b-container>
-    <!-- end card section -->
   </div>
 </template>
 
@@ -42,7 +35,6 @@ import { mapGetters, mapActions } from "vuex";
 import categoryPageSubjectComponent from "@/components/categoryPageSubjectComponent";
 import categoryRanking from "@/components/categoryRanking";
 export default {
-  //   middleware: "search",
   components: {
     categoryPageSubjectComponent,
     categoryRanking
@@ -50,8 +42,6 @@ export default {
   async fetch({ store, route }) {
     await store.dispatch("fetchAllArticles");
     await store.dispatch("createCategoryRanking");
-    // 【要変更】
-    // /searchのみを叩かれた時にroute.query.wの値が存在しない事からエラー画面が出力されてしまうのでその時の対応をする
     await store.dispatch("getArticlesByCategory", { category: route.query.name });
   },
   watch: {

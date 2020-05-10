@@ -1,12 +1,9 @@
 <template>
   <div class="container py-5">
     <b-container fluid="sm md lg xl">
-      <!-- start row and col -->
       <b-row no-gutters>
         <b-col md="8">
-          <!-- end row and col -->
           <div v-for="(article, index) in articles" :key="index">
-            <!-- 【下記はカード毎にmt-2を追加する】 -->
             <nuxt-link :to="`/article/${article.id}`" class="article-link">
               <b-card no-body class="overflow-hidden w-100">
                 <b-row no-gutters>
@@ -29,7 +26,6 @@
         </b-col>
       </b-row>
     </b-container>
-    <!-- end card section -->
   </div>
 </template>
 
