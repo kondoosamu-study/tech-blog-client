@@ -27,6 +27,10 @@ async function start () {
     await nuxt.ready()
   }
 
+  // req.bodyを使用する為の定義
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+
   app.use(helmet())
 
   app.get('/healthcheck', (req, res) => {

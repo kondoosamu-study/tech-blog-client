@@ -15,8 +15,6 @@
 </template>
 
 <script>
-// どうにもうまく動かない為、componentsに変更した方が良さそうかも
-// /search/index.vue以外（/(index.vue)トップページとarticle/_id.vue）には検索ワードを表示させない
 import searchForm from '@/components/searchForm';
 export default {
   components: {

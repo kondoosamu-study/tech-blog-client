@@ -8,8 +8,6 @@
 </template>
 
 <script>
-// どうにもうまく動かない為、componentsに変更した方が良さそうかも
-// /search/index.vue以外（/(index.vue)トップページとarticle/_id.vue）には検索ワードを表示させない
 import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
@@ -24,10 +22,8 @@ export default {
     ...mapGetters({ urlSearchWord: "getSearchWord" }),
   },
   async mounted() {
-    // 下記はNuxt Linkで遷移時に走っていないので実行されない
     if (this.$route.path !== "/search") {
       this.formSearchWord = "";
-      // delete this.formSearchWord;
     } else if (this.urlSearchWord.length) {
       await this.mountSearchWordsOnFormParameter();
     }

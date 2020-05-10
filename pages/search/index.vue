@@ -2,14 +2,10 @@
   <div class="container py-5 ">
     <b-container fluid="sm md lg xl">
       <searchPageSubjectComponent/>
-      <!-- start row and col -->  
       <b-row no-gutters>
         <b-col md="8">
-          <!-- 記事が存在しなかった場合の表示を追加する -->
-        <!-- end row and col -->  
           <div v-for="(article, index) in articlesInSearchResults" :key="index">
             <nuxt-link :to="`/article/${article.id}`" class="article-link">
-              <!-- 【下記はカード毎にmt-2を追加する】 -->
               <b-card no-body class="overflow-hidden w-100">
                 <b-row no-gutters>
                   <b-col md="2">
@@ -31,11 +27,11 @@
         </b-col>
       </b-row>
     </b-container>
-    <!-- end card section -->
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import { mapGetters, mapActions } from "vuex";
 import categoryRanking from '@/components/categoryRanking';
 import searchPageSubjectComponent from '@/components/searchPageSubjectComponent';
@@ -46,26 +42,20 @@ export default {
     searchPageSubjectComponent,
   },
   async fetch({ store, route }) {
-    await store.dispatch('fetchAllArticles');
     await store.dispatch('createCategoryRanking');
-    // 【要変更】
-    // /searchのみを叩かれた時にroute.query.wの値が存在しない事からエラーが画面が出力されてしまうのでその時の対応をする
 		await store.dispatch('getArticlesBySearchWord', { searchWord: route.query.w });
   },
   watch: {
     '$route'(to, from){
-      this.fetchAllArticles();
-      this.createCategoryRanking();
       this.getArticlesBySearchWord({ searchWord: to.query.w });
     }
   },
   computed: {
-    ...mapGetters({ articles: "getArticles" }),
 		...mapGetters({ categoryRanking: "getCategoryRanking" }),
-		...mapGetters({ articlesInSearchResults: "getSearchResultArticles" }),
+    ...mapGetters({ articlesInSearchResults: "getSearchResultArticles" }),
   },
   methods: {
-    ...mapActions(['fetchAllArticles', 'createCategoryRanking', 'getArticlesBySearchWord'])
+    ...mapActions(['createCategoryRanking', 'getArticlesBySearchWord'])
   }
 };
 </script>
