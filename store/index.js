@@ -96,19 +96,19 @@ export const mutations = {
 
 export const actions = {
   async fetchTargetArticle({ commit }, { id }) {
-    const { data } = await axios.get(`http://0.0.0.0:3000/api/article/${id}`);
+    const { data } = await axios.get(`https://ok-engineering.net/api/article/${id}`);
     let tags = data[0].tags.split(',');
     data[0].tags = tags;
     commit('setArticle', data[0]);
   },
 
   async fetchAllArticles({ commit }) {
-    const { data } = await axios.get(`http://0.0.0.0:3000/api/articles`);
+    const { data } = await axios.get(`https://ok-engineering.net/api/articles`);
     commit('setAllArticles', data);
   },
 
   async createCategoryRanking({ commit }) {
-    const { data } = await axios.get('http://0.0.0.0:3000/api/category-ranking');
+    const { data } = await axios.get('https://ok-engineering.net/api/category-ranking');
     commit('setCategoryRanking', data);
   },
 
@@ -124,7 +124,7 @@ export const actions = {
     let change5 = change4.toLowerCase();
     let searchWords = change5.split(/\s/);
     
-    let { data } = await axios.post('http://0.0.0.0:3000/api/search', {searchWords});
+    let { data } = await axios.post('https://ok-engineering.net/api/search', {searchWords});
     commit('setArticlesInSearchResults', data);
     commit('setNumberOfHitArticles', data.length);
   },
@@ -139,7 +139,7 @@ export const actions = {
   },
 
   async getArticlesByCategory({ commit }, { category }) {
-    const { data } = await axios.get(`http://0.0.0.0:3000/api/category/${category}`);
+    const { data } = await axios.get(`https://ok-engineering.net/api/category/${category}`);
     // tagsを配列に変更する必要がある
     let numberOfLoops = 0;
     for (let row of data) {
@@ -158,7 +158,7 @@ export const actions = {
   },
 
   async getArticlesByTag({ commit }, { tag }) {
-    const { data } = await axios.get(`http://0.0.0.0:3000/api/tag/${tag}`);
+    const { data } = await axios.get(`https://ok-engineering.net/api/tag/${tag}`);
     commit('setArticlesRelatedToTags', data);
     commit('setNumberOfHitTagsArticles', data.length);
     commit('setSearchTagName', tag);
