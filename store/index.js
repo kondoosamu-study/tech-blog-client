@@ -96,6 +96,8 @@ export const mutations = {
 
 export const actions = {
   async fetchTargetArticle({ commit }, { id }) {
+    // 【要変更】
+    // 以下6箇所にあるaxiosのURLはbaseUrl等に設定し、全URLを設定せずにAPIが叩けるようにする。
     // const { data } = await axios.get(`http://0.0.0.0:3000/api/article/${id}`);
     const { data } = await axios.get(`https://ok-engineering.net/api/article/${id}`);
     let tags = data[0].tags.split(',');
