@@ -37,13 +37,15 @@ import { mapGetters, mapActions } from "vuex";
 import tagPageSubjectComponent from "@/components/tagPageSubjectComponent";
 import categoryRanking from "@/components/categoryRanking";
 export default {
+  middleware: "getArticlesRelatedToTags",
   components: {
     tagPageSubjectComponent,
     categoryRanking
   },
   async fetch({ store, route }) {
     await store.dispatch("createCategoryRanking");
-    await store.dispatch("getArticlesByTag", { tag: route.params.tag });
+    let tag = encodeURIComponent(route.params.tag);
+    await store.dispatch("getArticlesByTag", { tag: tag });
   },
   watch: {
     '$route'(to, from) {

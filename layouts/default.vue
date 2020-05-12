@@ -43,6 +43,10 @@ html {
   margin: 0;
 }
 
+#__layout > div > nav > div {
+  cursor: pointer;
+}
+
 #__layout > div > nav {
   color: #fff;
   background-color: #000 !important;
