@@ -26,7 +26,8 @@ JOIN articles_tags AS AT ON AT.article_id = A.id
 JOIN tags ON tags.id = AT.tag_id
 WHERE C.name = ?
 AND A.deleted_at is NULL
-GROUP BY A.id;`;
+GROUP BY A.id
+ORDER BY A.updated_at desc;`;
 let getArticlesRelatedToTagQuery = `SELECT A.id, A.title, C.name AS category, A.contents, T.name AS thumbnailName, T.url AS thumbnailUrl, T.full_path AS thumbnailFullPath, S.id AS seriesId, S.name AS series, A.series_order AS seriesOrder, DATE_FORMAT(A.created_at, '%Y-%m-%d %T') AS createdAt, DATE_FORMAT(A.updated_at, '%Y-%m-%d %T') AS updatedAt, DATE_FORMAT(A.deleted_at, '%Y-%m-%d %T') AS deletedAt, GROUP_CONCAT(tags.name) AS tags FROM articles AS A
 JOIN categories AS C ON C.id = A.category_id
 JOIN series AS S ON S.id = A.series_id
@@ -35,7 +36,8 @@ JOIN articles_tags AS AT ON AT.article_id = A.id
 JOIN tags ON tags.id = AT.tag_id
 WHERE tags.name LIKE ?
 AND A.deleted_at is NULL
-GROUP BY A.id;`;
+GROUP BY A.id
+ORDER BY A.updated_at desc;`;
 let getArticlesFromSearchWordQuery = `SELECT A.id, A.title, C.name AS category, A.contents, T.name AS thumbnailName, T.url AS thumbnailUrl, T.full_path AS thumbnailFullPath, S.id AS seriesId, S.name AS series, A.series_order AS seriesOrder, DATE_FORMAT(A.created_at, '%Y-%m-%d %T') AS createdAt, DATE_FORMAT(A.updated_at, '%Y-%m-%d %T') AS updatedAt, DATE_FORMAT(A.deleted_at, '%Y-%m-%d %T') AS deletedAt, GROUP_CONCAT(tags.name) AS tags FROM articles AS A
 JOIN categories AS C ON C.id = A.category_id
 JOIN series AS S ON S.id = A.series_id

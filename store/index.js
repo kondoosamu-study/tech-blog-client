@@ -167,8 +167,14 @@ export const actions = {
   async getArticlesByTag({ commit }, { tag }) {
     // const { data } = await axios.get(`http://0.0.0.0:3000/api/tag/${tag}`);
     const { data } = await axios.get(`https://ok-engineering.net/api/tag/${tag}`);
+    
+    if (data.length === 0) {
+      this.$router.push("/");
+    }
+    let decodeTag = decodeURIComponent(tag);
+
     commit('setArticlesRelatedToTags', data);
     commit('setNumberOfHitTagsArticles', data.length);
-    commit('setSearchTagName', tag);
+    commit('setSearchTagName', decodeTag);
   },
 }
