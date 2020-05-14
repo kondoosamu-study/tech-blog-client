@@ -1,7 +1,7 @@
 {
   "name": "ok-engineering.net",
   "version": "1.0.0",
-  "description": "Tech blog with Nuxt.js",
+  "description": "ok-engineering.netはエンジニアブログです。インフラ・バックエンドをメインに様々なトピックをお送りしています。",
   "author": "ok",
   "private": true,
   "scripts": {
