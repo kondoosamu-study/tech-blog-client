@@ -8,9 +8,12 @@
       <b-card-body :title="article.title" class="text-left py-2">
         <b-card-text class="article-context">
           <p><nuxt-link :to="`/category?name=${article.category}`" class="category-link">カテゴリ: {{ article.category }}</nuxt-link></p>
-          <p>タグ: <span v-for="(tag, index) in article.tags" :key="index" class="mr-2">
-            <nuxt-link :to="`/tag/${tag}`" class="category-link">{{ tag }}</nuxt-link>
-            </span></p>
+          <p class="tags">タグ: 
+            <span v-for="(tag, index) in article.tags" :key="index" class="mr-2">
+              <nuxt-link v-if="article.tags.length-1 !== index" :to="`/tag/${tag}`" class="category-link">{{ tag }},</nuxt-link>
+              <nuxt-link v-else :to="`/tag/${tag}`" class="category-link">{{ tag }}</nuxt-link>
+            </span>
+          </p>
           <p>{{ article.updatedAt }}</p>
         </b-card-text>
       </b-card-body>
@@ -44,6 +47,10 @@ export default {
 
 #__layout > div > nav > li {
   margin: 0 0 0 auto;
+}
+
+.tags {
+  height: 100%;
 }
 
 form > input {
