@@ -68,7 +68,6 @@ form > input::placeholder {
     margin: 0 0 0 auto;
 }
 
-
 /* SP用のCSS */
 @media only screen and (max-device-width: 480px) {
   #__layout > div > nav > a {

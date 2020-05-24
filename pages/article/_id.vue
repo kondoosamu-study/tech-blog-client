@@ -83,4 +83,8 @@ export default {
 		margin:0;
 		white-space:pre;
 	}
+
+  #contents > p > img {
+    width: 100%;
+  }
 </style>
